@@ -5,7 +5,7 @@ import numpy as np
 
 class FurioPipeline():
     
-    N_SAMPLES = 30
+    N_SAMPLES = 10
 
     @staticmethod
     def load_img(img_file: str) -> np.ndarray:
