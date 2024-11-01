@@ -30,4 +30,3 @@ payload = {
 
 response = requests.post(LLAMA_API_URL, headers=HEADERS, json=payload)
 furio_array_str = response.json()["choices"][0]["message"]["content"]
-furio_array = 
