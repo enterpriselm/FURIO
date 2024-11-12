@@ -1,47 +1,59 @@
 document.getElementById('upload-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     
+    // Get the image file and threshold values from the form inputs
     const imageFile = document.getElementById('image').files[0];
     const lowThreshold = parseFloat(document.getElementById('low_threshold').value);
     const upperThreshold = parseFloat(document.getElementById('upper_threshold').value);
 
+    // Create FormData to send to the server
     const formData = new FormData();
     formData.append('file', imageFile);
     formData.append('low_threshold', lowThreshold);
     formData.append('upper_threshold', upperThreshold);
 
+    // Send the request to the API
     const response = await fetch('http://localhost:8000/generate_masks/', {
         method: 'POST',
         body: formData,
     });
 
+    // Handle the response
     if (!response.ok) {
         console.error('Error:', response.statusText);
         return;
     }
 
     const data = await response.json();
-    displayMasks(data.high_frequency_mask, data.low_frequency_mask);
+    displayMasks(data.image_array, data.high_frequency_mask, data.low_frequency_mask);
 });
 
-function displayMasks(highMask, lowMask) {
+function displayMasks(originalImg, highMask, lowMask) {
     const container = document.getElementById('masks-container');
     container.innerHTML = ''; // Clear previous results
 
+    // Create a container div to hold the images
     const imageContainer = document.createElement('div');
-    imageContainer.className = 'image-container'; // Use flexbox for layout
+    imageContainer.className = 'image-container'; // Flexbox layout class
+
+    // Create image elements and set their src as base64 data URLs
+    const origImg = document.createElement('img');
+    origImg.src = `data:image/png;base64,${originalImg}`;
+    origImg.alt = 'Original Image';
+    origImg.className = 'image-display'; // Optional: Use class for consistent styling
 
     const highImg = document.createElement('img');
     highImg.src = `data:image/png;base64,${highMask}`;
     highImg.alt = 'High Frequency Mask';
-    highImg.className = 'image-display'; // Use class for sizing
+    highImg.className = 'image-display'; // Optional: Use class for consistent styling
 
     const lowImg = document.createElement('img');
     lowImg.src = `data:image/png;base64,${lowMask}`;
     lowImg.alt = 'Low Frequency Mask';
-    lowImg.className = 'image-display'; // Use class for sizing
+    lowImg.className = 'image-display'; // Optional: Use class for consistent styling
 
-    // Append images to the image container
+    // Append the images to the container
+    imageContainer.appendChild(origImg);
     imageContainer.appendChild(highImg);
     imageContainer.appendChild(lowImg);
 
