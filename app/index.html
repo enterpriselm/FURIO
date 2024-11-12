@@ -3,28 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FURIO.io</title>
+    <title>fur.io</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to the CSS file -->
 </head>
 <body>
-    <h1>Fast Fourier Transform Segmentation</h1>
-    <form id="upload-form">
-        <input type="file" id="image" accept="image/*" required />
-        <br/>
-        <label for="low_threshold">Low Threshold:</label>
-        <input type="number" id="low_threshold" value="0.15" step="0.01" min="0" max="1" required />
-        <br/>
-        <label for="upper_threshold">Upper Threshold:</label>
-        <input type="number" id="upper_threshold" value="0.6" step="0.01" min="0" max="1" required />
-        <br/>
-        <button type="submit">Generate Masks</button>
-    </form>
+    <h1>fur.IO</h1>
 
-    <div id="masks-container" class="image-container">
-        <!-- Images will be appended here -->
+    <div class="container">
+        
+        <div class="app-content">
+            <form id="upload-form">
+                <input type="file" id="image" accept="image/*" required />
+                <br/>
+                <label for="low_threshold">Low Threshold:</label>
+                <input type="number" id="low_threshold" value="0.15" step="0.01" min="0" max="1" required />
+                <br/>
+                <label for="upper_threshold">Upper Threshold:</label>
+                <input type="number" id="upper_threshold" value="0.6" step="0.01" min="0" max="1" required />
+                <br/>
+                <button type="submit">Generate Masks</button>
+            </form>
+
+            <div id="masks-container" class="image-container">
+                <!-- Images will be appended here -->
+            </div>
+        </div>
+
+        <div class="cta-form">
+            <h2>Get in Touch</h2>
+            <form id="cta-form">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" required>
+
+                <label for="role">Role</label>
+                <input type="text" id="role" name="role" required>
+
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        
+    </div>
+    <div class="explanation">
+        <h2>How Does This Tool Work?</h2>
+        <p>When you upload an image and set thresholds, our tool uses a mathematical method called the <strong>Fast Fourier Transform (FFT)</strong>.</p>
+        <p>FFT is a powerful technique in signal processing that breaks down an image into its frequency components, separating high-frequency elements from low-frequency ones.</p>
+        <p>This lets us create:</p>
+        <ul>
+            <li><strong>High-frequency masks</strong>: Highlight fine details, textures, and edges in the image.</li>
+            <li><strong>Low-frequency masks</strong>: Reveal broader patterns or smoother regions of the image.</li>
+        </ul>
+        <h3>Understanding the Parameters</h3>
+        <p><strong>1. Image Upload</strong>: Upload any image, preferably in color (e.g., .jpg, .png). This is the image that will be processed to create the frequency masks.</p>
+        <p><strong>2. Low Threshold</strong>: Controls the lower limit for frequency filtering. Adjusting this threshold allows you to control how much low-frequency content is retained in the low-frequency mask.</p>
+        <p><strong>3. Upper Threshold</strong>: Controls the upper limit for frequency filtering. Adjusting this threshold lets you control how much high-frequency content is retained in the high-frequency mask.</p>
+        <h3>Why Is This Approach Safer Than Using ‘Black Box’ Machine Learning Models?</h3>
+        <p>Traditional machine learning models are often "black box" systems, meaning they produce results without showing how they arrive at their conclusions...</p>
+        <p><strong>Our tool, based on FFT, offers:</strong></p>
+        <ul>
+            <li><strong>Transparency</strong>: You can understand exactly how each mask is created.</li>
+            <li><strong>Control</strong>: Adjust thresholds to influence the results directly.</li>
+            <li><strong>Reliability</strong>: The process is rooted in well-established signal processing principles, offering a safer and more predictable method.</li>
+        </ul>
     </div>
 
     <script src="script.js"></script> <!-- Link to the JavaScript file -->
+
     <footer class="footer">
         <img src="static/logo.png" alt="Logo" class="footer-logo"> <!-- Update the path to your logo image -->
         <p>Powered By: ELM 2024</p>

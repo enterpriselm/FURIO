@@ -11,9 +11,9 @@ document.getElementById('upload-form').addEventListener('submit', async (event) 
     formData.append('file', imageFile);
     formData.append('low_threshold', lowThreshold);
     formData.append('upper_threshold', upperThreshold);
-
+    
     // Send the request to the API
-    const response = await fetch('http://localhost:8000/generate_masks/', {
+    const response = await fetch('http://localhost:3000/generate_masks/', {
         method: 'POST',
         body: formData,
     });
@@ -60,3 +60,32 @@ function displayMasks(originalImg, highMask, lowMask) {
     // Append the image container to the main container
     container.appendChild(imageContainer);
 }
+
+document.getElementById('cta-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Capture form data
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        company: document.getElementById('company').value,
+        role: document.getElementById('role').value
+    };
+
+    fetch('http://localhost:3001/submit-form', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Thank you for reaching out!');
+        document.getElementById('cta-form').reset();
+    })
+    .catch(error => {
+        alert('There was an error submitting your form. Please try again.');
+        console.error('Error:', error);
+    });
+});
