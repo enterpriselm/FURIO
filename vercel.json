@@ -1,18 +1,23 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "api.py",
-        "use": "@vercel/python"
-      },
-      {
-        "src": "contact.py",
-        "use": "@vercel/python"
-      }
-    ],
-    "routes": [
-      { "src": "/api/.*", "dest": "api.py" },
-      { "src": "/contact/.*", "dest": "contact.py" }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/api.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/contact.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "public/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/api/.*", "dest": "api/api.py" },
+    { "src": "/contact/.*", "dest": "api/contact.py" },
+    { "src": "/", "dest": "public/index.html" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ]
+}

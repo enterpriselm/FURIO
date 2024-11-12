@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+opencv-python
+celery
+numpy
+logging
+base64
+pillow
+scikit-image
+matplotlib
