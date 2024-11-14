@@ -78,7 +78,7 @@ async def generate_masks(
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    with open("index.html") as f:
+    with open("public/index.html") as f:
         return HTMLResponse(content=f.read())
 
 #if __name__ == "__main__":
