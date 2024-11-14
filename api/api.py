@@ -6,7 +6,7 @@ import numpy as np
 import logging
 import base64
 
-from src.codes.fft_segmentation import load_image, gen_masks
+from api.fft_segmentation import load_image, gen_masks
 from celery import Celery
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
