@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Generate Masks</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        h1, h2 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; }
+        code { color: #d63384; }
+        .section { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>API Documentation - Generate Masks</h1>
+    <p>This documentation describes the <code>/generate_masks/</code> route of the API hosted at <code>https://furio.onrender.com</code>.</p>
+
+    <div class="section">
+        <h2>Endpoint</h2>
+        <p><strong>URL:</strong> <code>https://furio.onrender.com/generate_masks/</code></p>
+        <p><strong>HTTP Method:</strong> POST</p>
+    </div>
+
+    <div class="section">
+        <h2>Input Parameters</h2>
+        <p>The request should be sent as <code>multipart/form-data</code> and include the following parameters:</p>
+        <ul>
+            <li><strong>file</strong> (<em>required</em>): An image file (PNG or JPG) to be processed by the API.</li>
+            <li><strong>low_threshold</strong> (<em>optional</em>): A numeric value (float) defining the lower threshold for the low-frequency mask.</li>
+            <li><strong>upper_threshold</strong> (<em>optional</em>): A numeric value (float) defining the upper threshold for the high-frequency mask.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Request Example</h2>
+        <pre><code>
+POST /generate_masks/ HTTP/1.1
+Host: furio.onrender.com
+Content-Type: multipart/form-data; boundary=---BOUNDARY
+
+---BOUNDARY
+Content-Disposition: form-data; name="file"; filename="example.png"
+Content-Type: image/png
+
+[binary content of the image]
+---BOUNDARY
+Content-Disposition: form-data; name="low_threshold"
+
+0.1
+---BOUNDARY
+Content-Disposition: form-data; name="upper_threshold"
+
+0.5
+---BOUNDARY--
+        </code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Expected Response</h2>
+        <p>If the request is successful, the API will return a JSON object containing the original image and the masks in base64 format.</p>
+        <pre><code>
+{
+    "image_array": "data:image/png;base64, ...",
+    "high_frequency_mask": "data:image/png;base64, ...",
+    "low_frequency_mask": "data:image/png;base64, ..."
+}
+        </code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Status Codes</h2>
+        <ul>
+            <li><strong>200 OK</strong>: The request was successful, and the response contains the generated masks.</li>
+            <li><strong>400 Bad Request</strong>: The request is invalid or missing required parameters.</li>
+            <li><strong>500 Internal Server Error</strong>: A server error occurred while processing the image.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>JavaScript Example</h2>
+        <pre><code>
+const formData = new FormData();
+formData.append('file', imageFile);
+formData.append('low_threshold', 0.1);
+formData.append('upper_threshold', 0.5);
+
+fetch('https://furio.onrender.com/generate_masks/', {
+    method: 'POST',
+    body: formData
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Original Image:', data.image_array);
+    console.log('High Frequency Mask:', data.high_frequency_mask);
+    console.log('Low Frequency Mask:', data.low_frequency_mask);
+})
+.catch(error => console.error('Error:', error));
+        </code></pre>
+    </div>
+</body>
+</html>

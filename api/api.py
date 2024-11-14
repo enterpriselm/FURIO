@@ -84,6 +84,12 @@ async def read_root():
     with open("api/public/index.html") as f:
         return HTMLResponse(content=f.read())
 
+@app.get("/documentation", response_class=HTMLResponse)
+async def read_root():
+    with open("api/public/documentation.html") as f:
+        return HTMLResponse(content=f.read())
+
+
 #if __name__ == "__main__":
 #    import uvicorn
 #    port = int(os.getenv("PORT", 8000))  # Bind to dynamic port or default to 8000 for local testing
