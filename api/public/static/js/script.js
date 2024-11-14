@@ -30,6 +30,36 @@ document.getElementById('upload-form').addEventListener('submit', async (event) 
     displayMasks(data.image_array, data.high_frequency_mask, data.low_frequency_mask);
 });
 
+document.getElementById('loading-spinner').style.display = 'block';
+
+    try {
+        // Send the request to the API
+        const response = await fetch(`${apiUrl}/generate_masks/`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        // Hide the loading spinner
+        document.getElementById('loading-spinner').style.display = 'none';
+
+        // Handle the response
+        if (!response.ok) {
+            console.error('Error:', response.statusText);
+            return;
+        }
+
+        const data = await response.json();
+        displayMasks(data.image_array, data.high_frequency_mask, data.low_frequency_mask);
+
+    } catch (error) {
+        // Hide the loading spinner if there's an error
+        document.getElementById('loading-spinner').style.display = 'none';
+        console.error('Error:', error);
+        alert('There was an error processing your request.');
+    }
+});
+
+
 function displayMasks(originalImg, highMask, lowMask) {
     const container = document.getElementById('masks-container');
     container.innerHTML = ''; // Clear previous results
