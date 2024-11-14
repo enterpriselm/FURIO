@@ -7,7 +7,7 @@ import logging
 import base64
 
 from api.fft_segmentation import load_image, gen_masks
-from celery import Celery
+#from celery import Celery
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -22,11 +22,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-celery_app = Celery("tasks", broker="redis://localhost:6379/0")
+#celery_app = Celery("tasks", broker="redis://localhost:6379/0")
 
-@celery_app.task
-def process_masks(image_array, low_threshold, upper_threshold):
-    return gen_masks(image_array, low_threshold, upper_threshold)
+#@celery_app.task
+#def process_masks(image_array, low_threshold, upper_threshold):
+#    return gen_masks(image_array, low_threshold, upper_threshold)
 
 def mask_to_base64(mask: np.ndarray) -> str:
     # Convert bi111111nary mask (NumPy array) to a grayscale PIL image
