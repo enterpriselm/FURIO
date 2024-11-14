@@ -7,7 +7,7 @@ import logging
 import base64
 
 from api.fft_segmentation import load_image, gen_masks
-#from celery import Celery
+from celery import Celery
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -22,11 +22,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-#celery_app = Celery("tasks", broker="redis://localhost:6379/0")
+celery_app = Celery("tasks", broker="redis://localhost:6379/0")
 
-#@celery_app.task
-#def process_masks(image_array, low_threshold, upper_threshold):
-#    return gen_masks(image_array, low_threshold, upper_threshold)
+@celery_app.task
+def process_masks(image_array, low_threshold, upper_threshold):
+    return gen_masks(image_array, low_threshold, upper_threshold)
 
 def mask_to_base64(mask: np.ndarray) -> str:
     # Convert bi111111nary mask (NumPy array) to a grayscale PIL image
@@ -67,3 +67,9 @@ async def generate_masks(file: UploadFile = File(...), low_threshold: float = Bo
 async def read_root():
     with open("index.html") as f:
         return HTMLResponse(content=f.read())
+    
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    port = int(os.getenv("PORT", 8000))  # Use the PORT environment variable or fallback to 8000 for local testing
+    uvicorn.run(app, host="0.0.0.0", port=port)

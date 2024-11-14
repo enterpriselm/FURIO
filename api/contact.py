@@ -52,3 +52,9 @@ async def submit_form(form_data: ContactForm):
     except Exception as e:
         # If something goes wrong, raise an HTTP exception
         raise HTTPException(status_code=500, detail="Error saving form data")
+
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    port = int(os.getenv("PORT", 8001))  # Use the PORT environment variable or fallback to 8000 for local testing
+    uvicorn.run(app, host="0.0.0.0", port=port)
