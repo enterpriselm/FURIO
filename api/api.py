@@ -4,6 +4,7 @@ import base64
 from fastapi import FastAPI, File, UploadFile, Body
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 #from celery import Celery
 import cv2
 import numpy as np
@@ -16,6 +17,8 @@ logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="api/public/static"), name="static")
 
 # CORS settings from environment (for deployment flexibility)
 origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
