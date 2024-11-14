@@ -1,4 +1,4 @@
-const apiUrl = 'https://furio.onrender.com/' || 'http://localhost:8000';
+const apiUrl = 'https://furio.onrender.com' || 'http://localhost:8000';
 
 document.getElementById('upload-form').addEventListener('submit', async (event) => {
     event.preventDefault();
