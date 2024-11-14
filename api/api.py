@@ -4,7 +4,7 @@ import base64
 from fastapi import FastAPI, File, UploadFile, Body
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
-from celery import Celery
+#from celery import Celery
 import cv2
 import numpy as np
 
@@ -29,12 +29,12 @@ app.add_middleware(
 )
 
 # Configure Celery with Redis URL from environment
-redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")  # Default to local Redis
-celery_app = Celery("tasks", broker=redis_url)
+#redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")  # Default to local Redis
+#celery_app = Celery("tasks", broker=redis_url)
 
-@celery_app.task
-def process_masks(image_array, low_threshold, upper_threshold):
-    return gen_masks(image_array, low_threshold, upper_threshold)
+#@celery_app.task
+#def process_masks(image_array, low_threshold, upper_threshold):
+#    return gen_masks(image_array, low_threshold, upper_threshold)
 
 def mask_to_base64(mask: np.ndarray) -> str:
     """Convert binary mask (NumPy array) to base64-encoded PNG string."""
@@ -81,7 +81,7 @@ async def read_root():
     with open("index.html") as f:
         return HTMLResponse(content=f.read())
 
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.getenv("PORT", 8000))  # Bind to dynamic port or default to 8000 for local testing
-    uvicorn.run(app, host="0.0.0.0", port=port)
+#if __name__ == "__main__":
+#    import uvicorn
+#    port = int(os.getenv("PORT", 8000))  # Bind to dynamic port or default to 8000 for local testing
+#    uvicorn.run(app, host="0.0.0.0", port=port)
