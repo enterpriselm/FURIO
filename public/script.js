@@ -1,3 +1,5 @@
+const apiUrl = process.env.API_URL || 'http://localhost:8000';
+
 document.getElementById('upload-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     
@@ -13,7 +15,7 @@ document.getElementById('upload-form').addEventListener('submit', async (event) 
     formData.append('upper_threshold', upperThreshold);
     
     // Send the request to the API
-    const response = await fetch('http://localhost:8000/generate_masks/', {
+    const response = await fetch(`${apiUrl}/generate_masks/`, {
         method: 'POST',
         body: formData,
     });
@@ -72,7 +74,7 @@ document.getElementById('cta-form').addEventListener('submit', function(event) {
         role: document.getElementById('role').value
     };
 
-    fetch('http://localhost:8001/submit-form', {
+    fetch(`${apiUrl}/submit-form`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
